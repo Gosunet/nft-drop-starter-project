@@ -1,0 +1,19 @@
+{
+    "name": "Rin",
+    "symbol": "",
+    "image": "2.png",
+    "properties": {
+      "files": [
+        {
+          "uri": "2.png",
+          "type": "image/png"
+        }
+      ],
+      "creators": [
+        {
+          "address": "HwodkANpQax4Bfx3BQaTerVcJdGPxwjSAx6GXciFsaby",
+          "share": 100
+        }
+      ]
+    }
+  }
