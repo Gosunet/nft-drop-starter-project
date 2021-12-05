@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Program, Provider, web3 } from '@project-serum/anchor';
 import { MintLayout, TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
@@ -263,10 +263,6 @@ const CandyMachine = ({ walletAddress }) => {
     });
   };
 
-  useEffect(() => {
-    getCandyMachineState();
-  }, [getCandyMachineState]);
-
   const getProvider = () => {
     const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST;
     // Create a new connection object
@@ -283,7 +279,7 @@ const CandyMachine = ({ walletAddress }) => {
   };
 
   // Declare getCandyMachineState as an async method
-  const getCandyMachineState = async () => { 
+  const getCandyMachineState = useCallback(async () => { 
     const provider = getProvider();
     const idl = await Program.fetchIdl(candyMachineProgram, provider);
     const program = new Program(idl, candyMachineProgram, provider);
@@ -341,7 +337,7 @@ const CandyMachine = ({ walletAddress }) => {
 
     // Remove loading flag.
     setIsLoadingMints(false);
-  };
+  }, [mints]);
 
   const renderMintedItems = () => (
     <div className="gif-container">
@@ -372,6 +368,10 @@ const CandyMachine = ({ walletAddress }) => {
     // Else let's just return the current drop date
     return <p>{`Drop Date: ${machineStats.goLiveDateTimeString}`}</p>;
   };
+
+  useEffect(() => {
+    getCandyMachineState();
+  }, [getCandyMachineState]);
 
   return (
     machineStats && (
